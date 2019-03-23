@@ -4,30 +4,50 @@ import { carouselData } from '../../data'
 export default class Carousel extends Component {
   constructor(props){
     super(props);
-    this.state = {
+    this.state = {}
 
-    }
   }
-  componentDidMount(){
-
+  componentDidMount() {
+    this.setState({
+      imgs: carouselData,
+      selectedIdx: 0,
+      maxIdx: carouselData.length - 1
+    })
   }
 
   leftClick = () => {
-
+    this.setState(prevState => {
+      let newIdx = prevState.selectedIdx - 1
+      if (newIdx < 0) {
+        newIdx = prevState.maxIdx;
+      }
+      return {selectedIdx: newIdx}
+    })
   }
 
   rightClick = () => {
-
+    this.setState(prevState => {
+      let newIdx = prevState.selectedIdx + 1
+      if (newIdx > prevState.maxIdx) {
+        newIdx = 0;
+      }
+      return {selectedIdx: newIdx}
+    })
   }
 
   selectedImage = () => {
-    return <img src={} style={{display: 'block'}} />
+    const src = this.state.imgs[this.state.selectedIdx];
+    return <img src={src} style={{display: 'block'}} alt={src} />
   }
   
   render(){
     return (
       <div className="carousel">
         <div className="left-button" onClick={this.leftClick}>{"<"}</div>
+        {this.state.imgs ?
+          this.selectedImage() :
+          "Loading Carousel"
+        }
         <div className="right-button" onClick={this.rightClick}>{">"}</div>
       </div>
     )
