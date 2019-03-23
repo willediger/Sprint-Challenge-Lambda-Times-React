@@ -10,8 +10,7 @@ export default class Carousel extends Component {
   componentDidMount() {
     this.setState({
       imgs: carouselData,
-      selectedIdx: 0,
-      maxIdx: carouselData.length - 1
+      selectedIdx: 0
     })
   }
 
@@ -19,7 +18,7 @@ export default class Carousel extends Component {
     this.setState(prevState => {
       let newIdx = prevState.selectedIdx - 1
       if (newIdx < 0) {
-        newIdx = prevState.maxIdx;
+        newIdx = prevState.imgs.length - 1;
       }
       return {selectedIdx: newIdx}
     })
@@ -28,7 +27,7 @@ export default class Carousel extends Component {
   rightClick = () => {
     this.setState(prevState => {
       let newIdx = prevState.selectedIdx + 1
-      if (newIdx > prevState.maxIdx) {
+      if (newIdx > prevState.imgs.length - 1) {
         newIdx = 0;
       }
       return {selectedIdx: newIdx}
